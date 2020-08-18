@@ -24,7 +24,7 @@ dev.off()
 saveRDS(CombinedDataSubset,file="CombinedDataSubset.Rds")
 ```
 
-## Step3 :Rerclusturing the subset
+## Step3 :Re-clusturing the subset
 
 ```
 CombinedDataSubset <- ScaleData(CombinedDataSubset, verbose = FALSE)
