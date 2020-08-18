@@ -31,8 +31,6 @@ saveRDS(CombinedDataSubset,file="CombinedDataSubset.Rds")
 
 
 # Method1 
-
-
 ## Step3 :Re-clusturing the subset
 
 ```
@@ -54,19 +52,18 @@ dev.off()
 
 # Method2
 
-Continuation after step2 from Method 1
-## Step3 : Change teh defualt assay
+## Step3 : Change the defualt assay
 ```
 DefaultAssay(CombinedDataSubset) <- "RNA"
 ```
 
-## Step4: Split the Data for reanalysis based on Visits
+## Step4 : Split the Data for reanalysis based on Visits
 
 For downstream analysis each sample/condition need minimum of 200 cells. else its better to remove those samples or merge with other samples
 ```
 Subset_Cells.list <- SplitObject(CombinedDataSubset, split.by = "Visits")
 ```
-## Step5: Rerun SCT
+## Step5 : Rerun SCT
 ```
 for (i in 1:length(Subset_Cells.list)) {
   Subset_Cells.list[[i]] <- PercentageFeatureSet(Subset_Cells.list[[i]], pattern = "^MT-", col.name = "percent.mt")
@@ -76,10 +73,10 @@ for (i in 1:length(Subset_Cells.list)) {
 }
 ```
 
-## Step6:finding anchors and standard processing 
+## Step6 : Finding anchors and standard processing 
 ```
-pag_combined.anchors <- FindIntegrationAnchors(object.list = Subset_Cells.list, dims = 1:20)
-CombinedDataSubset.combined <- IntegrateData(anchorset = pag_combined.anchors, dims = 1:20)
+pag_combined.anchors <- FindIntegrationAnchors(object.list = Subset_Cells.list, dims = 1:6)
+CombinedDataSubset.combined <- IntegrateData(anchorset = pag_combined.anchors, dims = 1:6)
 CombinedDataSubset.combined <- ScaleData(CombinedDataSubset.combined, verbose = FALSE)
 CombinedDataSubset.combined <- RunPCA(CombinedDataSubset.combined, npcs = 6, verbose = FALSE)
 CombinedDataSubset.combined <- RunUMAP(CombinedDataSubset.combined, reduction = "pca", dims = 1:6)
@@ -87,7 +84,7 @@ CombinedDataSubset.combined <- RunTSNE(CombinedDataSubset.combined, reduction = 
 CombinedDataSubset.combined <- FindNeighbors(CombinedDataSubset.combined, reduction = "pca", dims = 1:6)
 CombinedDataSubset.combined <- FindClusters(CombinedDataSubset.combined)
 ```
-## Step7: plot the UMAP
+## Step7: Plot the UMAP
 ```
 png(filename = "CombinedData_Reclustured_BYVisit.png")
 DimPlot(CombinedDataSubset.combined, reduction = "umap")
