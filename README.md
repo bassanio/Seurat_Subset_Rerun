@@ -1,6 +1,6 @@
-# Steps involved in Substting Clusture of interest and rerunning on the Subset
+# Steps involved in Subsetting clusture of interest and reclusturing
 
-## Step1 : Loading and plotting the already analysed Singlecell data
+## Step1 : Loading and plotting the  analysed  data
 ```
 library(Seurat)
 CombinedData <- readRDS("CombinedData_labeled.rds")
@@ -24,7 +24,7 @@ dev.off()
 saveRDS(CombinedDataSubset,file="CombinedDataSubset.Rds")
 ```
 
-## Step3 :Rerun the Analysis on the subset
+## Step3 :Rerclusturing the subset
 
 ```
 CombinedDataSubset <- ScaleData(CombinedDataSubset, verbose = FALSE)
